@@ -1,0 +1,37 @@
+window.onload=function(){
+	var rightDiv=document.getElementById("right");
+var mainDiv=document.getElementById("main");
+var ifKeyDown=false;//鼠标此时没有按下
+//鼠标按下事件
+window.onmousedown=function(){
+	ifKeyDown=true;
+}
+//鼠标松开事件
+window.onmouseup=function(){
+	ifKeyDown=false;
+}
+//鼠标移动事件
+window.onmousemove=function(e){
+	if(ifKeyDown==true){
+		var x=e.clientX;//鼠标x的坐标
+	var widthBefore=mainDiv.offsetWidth-2;//选取框变化前的宽度
+	var addWidth=x-getPosition(mainDiv).left-widthBefore;//鼠标移动后选取框增加的宽度
+	
+	mainDiv.style.width=addWidth+widthBefore+"px";
+	}
+	
+}
+}
+
+function getPosition(node){
+	//获取元素相对于屏幕左边的距离 利用offsetLeft
+	var left=node.offsetLeft;//node相对于父元素的左边距
+	var top=node.offsetTop;
+	var parent=node.offsetParent;//node的父元素
+	while(parent!=null){
+		left+=parent.offsetLeft;
+		top+=parent.offsetTop;
+		parent=parent.offsetParent;
+	}
+	return {"left":left,"top":top};
+}
